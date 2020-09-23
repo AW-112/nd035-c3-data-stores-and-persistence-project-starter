@@ -19,11 +19,10 @@ public class UserService {
     EmployeeRepository employeeRepository;
 
     public Customer saveCustomer(Customer customer) { return customerRepository.save(customer); }
-
-    public Employee saveEmployee(Employee employee) { return employeeRepository.save(employee); }
-
     public List<Customer> findAllCustomers() {
         return customerRepository.findAll();
     }
 
+    public Employee saveEmployee(Employee employee) { return employeeRepository.save(employee); }
+    public Employee findEmployee(long id) { return employeeRepository.findById(id).orElseGet(null); }
 }

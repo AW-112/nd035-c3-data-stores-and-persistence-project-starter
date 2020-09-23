@@ -1,5 +1,12 @@
-package com.udacity.jdnd.course3.critter.user;
+package com.udacity.jdnd.course3.critter.user.controller;
 
+import com.udacity.jdnd.course3.critter.user.dto.CustomerDTO;
+import com.udacity.jdnd.course3.critter.user.dto.EmployeeDTO;
+import com.udacity.jdnd.course3.critter.user.dto.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.user.mapper.CustomerMapper;
+import com.udacity.jdnd.course3.critter.user.mapper.EmployeeMapper;
+import com.udacity.jdnd.course3.critter.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
@@ -16,14 +23,23 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
 
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-        throw new UnsupportedOperationException();
+        return customerMapper.entityToDTO(userService.saveCustomer(customerMapper.DTOToEntity(customerDTO)));
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        throw new UnsupportedOperationException();
+        return customerMapper.entitiesToDTOs(userService.findAllCustomers());
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -33,12 +49,12 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        return employeeMapper.entityToDTO(userService.saveEmployee(employeeMapper.DTOToEntity(employeeDTO)));
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return employeeMapper.entityToDTO(userService.findEmployee(employeeId));
     }
 
     @PutMapping("/employee/{employeeId}")
