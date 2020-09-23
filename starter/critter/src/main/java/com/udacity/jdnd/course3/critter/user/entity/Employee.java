@@ -1,25 +1,27 @@
-package com.udacity.jdnd.course3.critter.user;
+package com.udacity.jdnd.course3.critter.user.entity;
 
-import com.udacity.jdnd.course3.critter.schedule.Schedule;
+import com.udacity.jdnd.course3.critter.schedule.entity.Schedule;
 
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "employee")
 public class Employee {
     @Id
     @GeneratedValue
     private long id;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "employees")
-    private List<Schedule> schedules;
-
     private String name;
+
+    @ElementCollection(targetClass = EmployeeSkill.class)
+    @CollectionTable(name = "employee_skills")
     private Set<EmployeeSkill> skills;
+
+    @ElementCollection(targetClass = DayOfWeek.class)
+    @CollectionTable(name = "employee_days")
     private Set<DayOfWeek> daysAvailable;
 
     public Employee() {

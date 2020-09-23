@@ -1,18 +1,18 @@
-package com.udacity.jdnd.course3.critter.pet;
+package com.udacity.jdnd.course3.critter.pet.entity;
 
-import com.udacity.jdnd.course3.critter.user.Customer;
+import com.udacity.jdnd.course3.critter.user.entity.Customer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "pet")
-
 public class Pet {
     @Id
     @GeneratedValue
     private long id;
 
+    @Enumerated(EnumType.STRING)
     private PetType type;
     private String name;
 
