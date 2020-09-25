@@ -1,6 +1,7 @@
 package com.udacity.jdnd.course3.critter.pet.repository;
 
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
+import com.udacity.jdnd.course3.critter.user.entity.Customer;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,5 +12,7 @@ import java.util.List;
 
 @Repository
 public interface PetRepository extends JpaRepository<Pet, Long> {
-    List<Pet> findAllByCustomer(long ownerId);
+
+    @Query("select p from Pet p where p.customer = :customer")
+    List<Pet> findAllByCustomer(Customer customer);
 }

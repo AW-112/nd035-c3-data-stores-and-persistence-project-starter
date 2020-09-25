@@ -5,7 +5,8 @@ import com.udacity.jdnd.course3.critter.user.dto.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.dto.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.user.mapper.CustomerMapper;
 import com.udacity.jdnd.course3.critter.user.mapper.EmployeeMapper;
-import com.udacity.jdnd.course3.critter.user.service.UserService;
+import com.udacity.jdnd.course3.critter.user.service.CustomerService;
+import com.udacity.jdnd.course3.critter.user.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,16 +31,19 @@ public class UserController {
     private EmployeeMapper employeeMapper;
 
     @Autowired
-    private UserService userService;
+    private CustomerService customerService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
-        return customerMapper.entityToDTO(userService.saveCustomer(customerMapper.DTOToEntity(customerDTO)));
+        return customerMapper.entityToDTO(customerService.saveCustomer(customerMapper.DTOToEntity(customerDTO)));
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        return customerMapper.entitiesToDTOs(userService.findAllCustomers());
+        return customerMapper.entitiesToDTOs(customerService.getCustomers());
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -49,12 +53,12 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        return employeeMapper.entityToDTO(userService.saveEmployee(employeeMapper.DTOToEntity(employeeDTO)));
+        return employeeMapper.entityToDTO(employeeService.saveEmployee(employeeMapper.DTOToEntity(employeeDTO)));
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        return employeeMapper.entityToDTO(userService.findEmployee(employeeId));
+        return employeeMapper.entityToDTO(employeeService.getEmployeeById(employeeId));
     }
 
     @PutMapping("/employee/{employeeId}")

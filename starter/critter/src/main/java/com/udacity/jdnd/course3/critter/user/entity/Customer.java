@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.user.entity;
 import com.udacity.jdnd.course3.critter.pet.entity.Pet;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,13 @@ public class Customer {
     private List<Pet> pets;
 
     public Customer() {
+    }
+
+    public void addPet(Pet pet) {
+        if (pets == null) {
+            pets = new ArrayList<>();
+        }
+        pets.add(pet);
     }
 
     public long getId() {
