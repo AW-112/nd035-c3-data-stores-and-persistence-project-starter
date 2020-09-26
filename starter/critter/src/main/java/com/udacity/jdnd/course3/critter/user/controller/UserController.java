@@ -1,8 +1,10 @@
 package com.udacity.jdnd.course3.critter.user.controller;
 
+import com.udacity.jdnd.course3.critter.schedule.service.ScheduleService;
 import com.udacity.jdnd.course3.critter.user.dto.CustomerDTO;
 import com.udacity.jdnd.course3.critter.user.dto.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.user.dto.EmployeeRequestDTO;
+import com.udacity.jdnd.course3.critter.user.entity.Employee;
 import com.udacity.jdnd.course3.critter.user.mapper.CustomerMapper;
 import com.udacity.jdnd.course3.critter.user.mapper.EmployeeMapper;
 import com.udacity.jdnd.course3.critter.user.service.CustomerService;
@@ -36,6 +38,9 @@ public class UserController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private ScheduleService scheduleService;
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         return customerMapper.entityToDTO(customerService.saveCustomer(customerMapper.DTOToEntity(customerDTO)));
@@ -63,12 +68,17 @@ public class UserController {
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        Employee employee = employeeService.getEmployeeById(employeeId);
+        if (employee != null) {
+            employee.setDaysAvailable(daysAvailable);
+            employeeService.saveEmployee(employee);
+        }
     }
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        List<Employee> employees = employeeService.getEmployeesByService(employeeDTO.getDate(),employeeDTO.getSkills());
+        return employeeMapper.entitiesToDTOs(employees);
     }
 
 }
