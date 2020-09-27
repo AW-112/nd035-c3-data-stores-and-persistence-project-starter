@@ -12,4 +12,7 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("select e from Employee e where :dayOfWeek member of e.daysAvailable")
     List<Employee> findEmployeesForService(DayOfWeek dayOfWeek);
+
+    @Query("select e from Employee e where id in :employeeIds")
+    List<Employee> findByIds(List<Long> employeeIds);
 }

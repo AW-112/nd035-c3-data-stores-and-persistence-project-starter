@@ -22,11 +22,13 @@ public class PetService {
         Pet newPet = petRepository.save(pet);
         Customer customer = customerRepository.findById(pet.getCustomer().getId()).get();
         customer.addPet(newPet);
-        customer = customerRepository.save(customer);
+        customerRepository.save(customer);
         return newPet;
     }
 
     public Pet getPetById(long petId) { return petRepository.findById(petId).get(); }
+
+    public List<Pet> getPetsByIds(List<Long> petIds) { return petRepository.findByIds(petIds); }
 
     public List<Pet> getPetsByOwner(Customer customer) { return petRepository.findAllByCustomer(customer); }
 

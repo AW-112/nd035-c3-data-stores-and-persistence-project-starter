@@ -9,26 +9,26 @@ import java.util.stream.Collectors;
 
 @Component
 public class EmployeeMapper {
-    public Employee DTOToEntity(EmployeeDTO EmployeeDTO) {
-        Employee Employee = new Employee();
-        Employee.setName(EmployeeDTO.getName());
-        Employee.setSkills(EmployeeDTO.getSkills());
-        Employee.setDaysAvailable(EmployeeDTO.getDaysAvailable());
+    public Employee DTOToEntity(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        employee.setName(employeeDTO.getName());
+        employee.setSkills(employeeDTO.getSkills());
+        employee.setDaysAvailable(employeeDTO.getDaysAvailable());
 
-        return Employee;
+        return employee;
     }
 
-    public EmployeeDTO entityToDTO(Employee Employee) {
-        EmployeeDTO EmployeeDTO = new EmployeeDTO();
-        EmployeeDTO.setId(Employee.getId());
-        EmployeeDTO.setName(Employee.getName());
-        EmployeeDTO.setSkills(Employee.getSkills());
-        EmployeeDTO.setDaysAvailable(Employee.getDaysAvailable());
+    public EmployeeDTO entityToDTO(Employee employee) {
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(employee.getId());
+        employeeDTO.setName(employee.getName());
+        employeeDTO.setSkills(employee.getSkills());
+        employeeDTO.setDaysAvailable(employee.getDaysAvailable());
 
-        return EmployeeDTO;
+        return employeeDTO;
     }
 
-    public List<EmployeeDTO> entitiesToDTOs(List<Employee> Employees) {
-        return Employees.stream().map(this::entityToDTO).collect(Collectors.toList());
+    public List<EmployeeDTO> entitiesToDTOs(List<Employee> employees) {
+        return employees.stream().map(this::entityToDTO).collect(Collectors.toList());
     }
 }
